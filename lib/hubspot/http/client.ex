@@ -23,12 +23,8 @@ defmodule Hubspot.HTTP.Client do
           request(:post, "https://my.website.com", "{\"foo\": 3}", [{"Accept", "application/json"}])
   """
   def request(method, url, body \\ "", headers \\ [], params \\ []) do
-    options = params |> add_auth |> process_request_options
+    options = params |> process_request_options
     super(method, url, body, headers, options)
-  end
-
-  defp add_auth(query) do
-    [{get_env(:hubspotex, :auth_method), get_env(:hubspotex, :auth_key)} | query]
   end
 
   def process_url(url = "http" <> _), do: url
